@@ -57,19 +57,12 @@ Repeat for:
 ### Upload
 - POST `/upload/api/post`
 
----
-
-## 📸 Screenshots
-
-(Add your screenshots here)
-
----
 
 ## 👨‍💻 Author
 
-**Ritesh Jha (RJ)**  
-- GitHub: https://github.com/your-username  
-- LinkedIn: (your link)
+**Ritik Anand**  
+- GitHub: https://github.com/Ritik137
+- LinkedIn: https://www.linkedin.com/in/ritik-anand-9ba026250/
 
 ---
 
