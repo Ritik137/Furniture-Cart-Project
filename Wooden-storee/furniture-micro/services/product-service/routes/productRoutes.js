@@ -12,23 +12,23 @@ import multer from "multer";
 
 const router = express.Router();
 
-// 📦 Multer setup (for image upload)
+// 📦 Multer setup
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// ➕ Add Product (Admin only + image)
+// ➕ Add Product
 router.post("/add", verifyToken, isAdmin, upload.single("image"), addProduct);
 
-// 📖 Get all products (public)
+// 📖 Get all products (with optional category filter)
 router.get("/getall", getProducts);
 
 // 📖 Get single product
 router.get("/get/:id", getProductById);
 
-// ✏️ Update product (Admin only)
+// ✏️ Update product
 router.put("/update/:id", verifyToken, isAdmin, upload.single("image"), updateProduct);
 
-// 🗑️ Delete product (Admin only)
+// 🗑️ Delete product
 router.delete("/delete/:id", verifyToken, isAdmin, deleteProduct);
 
 export default router;

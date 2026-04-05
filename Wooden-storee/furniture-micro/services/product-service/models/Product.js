@@ -13,6 +13,11 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
 
+    discountPrice: {
+      type: Number,
+      default: 0,
+    },
+
     description: {
       type: String,
       default: "",
@@ -23,9 +28,55 @@ const productSchema = new mongoose.Schema(
       default: "general",
     },
 
-    image: {
+    brand: {
       type: String,
       default: "",
+    },
+
+    images: [
+      {
+        type: String,
+      },
+    ],
+
+    stock: {
+      type: Number,
+      default: 0,
+    },
+
+    rating: {
+      type: Number,
+      default: 0,
+    },
+
+    numReviews: {
+      type: Number,
+      default: 0,
+    },
+
+    material: {
+      type: String,
+      default: "",
+    },
+
+    color: {
+      type: String,
+      default: "",
+    },
+
+    dimensions: {
+      type: String,
+      default: "",
+    },
+
+    warranty: {
+      type: String,
+      default: "",
+    },
+
+    deliveryTime: {
+      type: String,
+      default: "3-5 days",
     },
 
     createdBy: {
@@ -34,7 +85,7 @@ const productSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // 🔥 important
+    timestamps: true,
   }
 );
 

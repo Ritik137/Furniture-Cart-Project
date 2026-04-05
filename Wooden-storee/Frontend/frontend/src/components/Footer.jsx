@@ -1,78 +1,73 @@
 import { FaLinkedin, FaGithub, FaInstagram, FaTwitter } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <div className="bg-black text-white mt-10 py-6">
+    <footer className="bg-stone-900 text-white mt-auto">
+      <div className="max-w-7xl mx-auto px-6 pt-14 pb-8">
 
-      <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
 
-        {/* Brand */}
-        <div>
-          <h2 className="text-xl font-bold mb-2">🪑 Furniture</h2>
-          <p className="text-gray-400">
-            Modern furniture for modern homes.
-          </p>
-        </div>
-
-        {/* Links */}
-        <div>
-          <h2 className="font-semibold mb-2">Quick Links</h2>
-          <p className="text-gray-400">Home</p>
-          <p className="text-gray-400">About</p>
-          <p className="text-gray-400">Cart</p>
-        </div>
-
-        {/* Developer + Social */}
-        <div>
-          <h2 className="font-semibold mb-2">Developer</h2>
-          <p className="text-gray-400">Ritik Anand</p>
-          <p className="text-gray-400 mb-3">Full Stack Developer</p>
-
-          {/* 🔥 SOCIAL ICONS */}
-          <div className="flex gap-4 text-xl">
-
-            <a
-              href="https://www.linkedin.com/in/ritik-anand-9ba026250/"
-              target="_blank"
-              className="hover:text-blue-500"
-            >
-              <FaLinkedin />
-            </a>
-
-            <a
-              href="https://github.com/Ritik137"
-              target="_blank"
-              className="hover:text-gray-400"
-            >
-              <FaGithub />
-            </a>
-
-            <a
-              href="https://www.instagram.com/_i_m__ritik_"
-              target="_blank"
-              className="hover:text-pink-500"
-            >
-              <FaInstagram />
-            </a>
-
-            <a
-              href="https://x.com/Born_to_ruleee"
-              target="_blank"
-              className="hover:text-blue-400"
-            >
-              <FaTwitter />
-            </a>
-
+          {/* Brand */}
+          <div>
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <rect x="2" y="13" width="20" height="5" rx="2" fill="#1a1a1a" />
+                  <rect x="4" y="8" width="16" height="6" rx="2" fill="#1a1a1a" opacity="0.7" />
+                  <rect x="5" y="18" width="2" height="4" rx="1" fill="#1a1a1a" />
+                  <rect x="17" y="18" width="2" height="4" rx="1" fill="#1a1a1a" />
+                </svg>
+              </div>
+              <span className="text-lg font-semibold" style={{ fontFamily: "Georgia, serif" }}>Furnish</span>
+            </div>
+            <p className="text-stone-400 text-sm leading-relaxed max-w-xs">
+              Thoughtfully designed furniture for the spaces you live in. Quality crafted, delivered to your door.
+            </p>
           </div>
 
+          {/* Links */}
+          <div>
+            <h3 className="text-xs font-semibold tracking-widest uppercase text-stone-500 mb-4">Navigate</h3>
+            <div className="space-y-3">
+              {[{ to: "/", label: "Home" }, { to: "/about", label: "About" }, { to: "/cart", label: "Cart" }].map(({ to, label }) => (
+                <Link key={to} to={to}
+                  className="block text-sm text-stone-400 no-underline hover:text-white transition-colors duration-150">
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Developer */}
+          <div>
+            <h3 className="text-xs font-semibold tracking-widest uppercase text-stone-500 mb-4">Developer</h3>
+            <p className="text-white font-medium mb-1">Ritik Anand</p>
+            <p className="text-stone-400 text-sm mb-5">Full Stack Developer</p>
+
+            <div className="flex gap-2">
+              {[
+                { href: "https://www.linkedin.com/in/ritik-anand-9ba026250/", icon: <FaLinkedin />, hoverClass: "hover:text-blue-400 hover:border-blue-500" },
+                { href: "https://github.com/Ritik137", icon: <FaGithub />, hoverClass: "hover:text-white hover:border-stone-400" },
+                { href: "https://www.instagram.com/_i_m__ritik_", icon: <FaInstagram />, hoverClass: "hover:text-pink-400 hover:border-pink-500" },
+                { href: "https://x.com/Born_to_ruleee", icon: <FaTwitter />, hoverClass: "hover:text-sky-400 hover:border-sky-500" },
+              ].map(({ href, icon, hoverClass }, i) => (
+                <a key={i} href={href} target="_blank" rel="noreferrer"
+                  className={`w-9 h-9 border border-stone-700 rounded-lg flex items-center justify-center text-stone-500 no-underline transition-all duration-150 ${hoverClass}`}>
+                  {icon}
+                </a>
+              ))}
+            </div>
+          </div>
         </div>
 
+        {/* Bottom bar */}
+        <div className="border-t border-stone-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
+          <span className="text-stone-500 text-xs">© 2026 Furnish by Ritik Anand. All rights reserved.</span>
+          <span className="text-stone-600 text-xs">Built with React · Node.js · MongoDB</span>
+        </div>
       </div>
-
-      <p className="text-center text-gray-500 mt-6">
-        © 2026 Ritik Furniture App. All rights reserved.
-      </p>
-
-    </div>
+    </footer>
   );
 }
+  

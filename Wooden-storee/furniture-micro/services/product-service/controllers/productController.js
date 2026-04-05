@@ -4,7 +4,20 @@ import cloudinary from "../config/cloudinary.js";
 // ➕ Add Product
 export const addProduct = async (req, res) => {
   try {
-    const { name, price, description, category } = req.body;
+    const {
+      name,
+      price,
+      discountPrice,
+      description,
+      category,
+      brand,
+      stock,
+      material,
+      color,
+      dimensions,
+      warranty,
+      deliveryTime,
+    } = req.body;
 
     if (!name || !price) {
       return res.status(400).json({ msg: "Name and price are required" });
@@ -12,16 +25,16 @@ export const addProduct = async (req, res) => {
 
     let imageUrl = "";
 
-    // Upload image if provided
     if (req.file) {
       const stream = cloudinary.uploader.upload_stream(
         { folder: "furniture" },
         async (error, result) => {
-          if (error) return res.status(500).json({ msg: "Image upload failed" });
+          if (error)
+            return res.status(500).json({ msg: "Image upload failed" });
 
           imageUrl = result.secure_url;
           await saveProduct();
-        }
+        },
       );
       stream.end(req.file.buffer);
     } else {
@@ -32,9 +45,17 @@ export const addProduct = async (req, res) => {
       const product = await Product.create({
         name,
         price,
+        discountPrice,
         description,
         category,
-        image: imageUrl,
+        brand,
+        stock,
+        material,
+        color,
+        dimensions,
+        warranty,
+        deliveryTime,
+        images: imageUrl ? [imageUrl] : [],
         createdBy: req.user?.userId,
       });
 
@@ -42,14 +63,20 @@ export const addProduct = async (req, res) => {
     }
   } catch (error) {
     console.error("Add Product Error ❌:", error);
-    res.status(500).json({ msg: "Failed to create product", error: error.message });
+    res.status(500).json({ msg: "Failed to create product" });
   }
 };
 
 // 📖 Get All Products
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const { category } = req.query;
+
+    let filter = {};
+    if (category) filter.category = category;
+
+    const products = await Product.find(filter).sort({ createdAt: -1 });
+
     res.json(products);
   } catch (error) {
     res.status(500).json({ msg: "Failed to fetch products" });
@@ -60,7 +87,9 @@ export const getProducts = async (req, res) => {
 export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
+
     if (!product) return res.status(404).json({ msg: "Product not found" });
+
     res.json(product);
   } catch (error) {
     res.status(500).json({ msg: "Failed to fetch product" });
@@ -70,18 +99,36 @@ export const getProductById = async (req, res) => {
 // ✏️ Update Product
 export const updateProduct = async (req, res) => {
   try {
-    const { name, price, description, category } = req.body;
-    let imageUrl = req.body.image;
+    const {
+      name,
+      price,
+      discountPrice,
+      description,
+      category,
+      brand,
+      stock,
+      material,
+      color,
+      dimensions,
+      warranty,
+      deliveryTime,
+    } = req.body;
+
+    const existingProduct = await Product.findById(req.params.id);
+
+    let imageUrl = existingProduct.image;
+    // let imageUrl = req.body.image || "";
 
     if (req.file) {
       const stream = cloudinary.uploader.upload_stream(
         { folder: "furniture" },
         async (error, result) => {
-          if (error) return res.status(500).json({ msg: "Image upload failed" });
+          if (error)
+            return res.status(500).json({ msg: "Image upload failed" });
 
           imageUrl = result.secure_url;
           await saveUpdate();
-        }
+        },
       );
       stream.end(req.file.buffer);
     } else {
@@ -91,9 +138,24 @@ export const updateProduct = async (req, res) => {
     async function saveUpdate() {
       const product = await Product.findByIdAndUpdate(
         req.params.id,
-        { name, price, description, category, image: imageUrl },
-        { new: true }
+        {
+          name,
+          price,
+          discountPrice,
+          description,
+          category,
+          brand,
+          stock,
+          material,
+          color,
+          dimensions,
+          warranty,
+          deliveryTime,
+          images: imageUrl ? [imageUrl] : [],
+        },
+        { new: true },
       );
+
       res.json({ msg: "Product updated successfully", product });
     }
   } catch (error) {
@@ -105,7 +167,9 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);
+
     if (!product) return res.status(404).json({ msg: "Product not found" });
+
     res.json({ msg: "Product deleted successfully" });
   } catch (error) {
     res.status(500).json({ msg: "Failed to delete product" });
