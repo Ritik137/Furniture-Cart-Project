@@ -23,7 +23,7 @@ export default function Home() {
 
   const fetchBanner = async () => {
     try {
-      const res = await fetch("http://localhost:5006/api/banner/get");
+      const res = await fetch("https://banner-service.onrender.com/api/banner/get");
       const data = await res.json();
       setBanner(data);
     } catch (err) {
