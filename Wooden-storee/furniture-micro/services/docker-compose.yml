@@ -1,0 +1,48 @@
+services:
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./auth-service/.env
+
+  product-service:
+    build: ./product-service
+    container_name: product-service
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./product-service/.env
+
+  order-service:
+    build: ./order-service
+    container_name: order-service
+    ports:
+      - "5003:5003"
+    env_file:
+      - ./order-service/.env
+
+  upload-service:
+    build: ./Upload-service
+    container_name: upload-service
+    ports:
+      - "5004:5004"
+    env_file:
+      - ./Upload-service/.env
+
+  user-service:
+    build: ./user-service
+    container_name: user-service
+    ports:
+      - "5005:5005"
+    env_file:
+      - ./user-service/.env
+
+  banner-service:
+    build: ./banner-service
+    container_name: banner-service
+    ports:
+      - "5006:5006"
+    env_file:
+      - ./banner-service/.env
