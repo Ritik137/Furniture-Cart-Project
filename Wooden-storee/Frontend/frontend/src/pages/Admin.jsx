@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { productAPI, bannerAPI } from "../utils/api";
+import { productAPI } from "../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Admin() {
@@ -140,11 +140,14 @@ export default function Admin() {
     formData.append("image", bannerFile);
 
     try {
-    await bannerAPI.post("/upload", formData, {
-  headers: {
-    "Content-Type": "multipart/form-data",
-  },
-});
+      await fetch("https://banner-service.onrender.com/api/banner/upload", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: formData,
+      });
+
       setSuccessMsg("✅ Banner uploaded successfully!");
       setTimeout(() => setSuccessMsg(""), 3000);
       setBannerFile(null);

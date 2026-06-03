@@ -16,11 +16,6 @@ export const orderAPI = axios.create({
   baseURL: "https://order-service-ry2o.onrender.com/orders/api",
 });
 
-// ================= BANNER =================
-export const bannerAPI = axios.create({
-  baseURL: "https://banner-service.onrender.com/api/banner",
-});
-
 // ================= COMMON INTERCEPTOR =================
 
 const attachToken = (config) => {
@@ -36,7 +31,6 @@ const attachToken = (config) => {
 authAPI.interceptors.request.use(attachToken);
 productAPI.interceptors.request.use(attachToken);
 orderAPI.interceptors.request.use(attachToken);
-bannerAPI.interceptors.request.use(attachToken);
 
 // ================= GLOBAL ERROR HANDLER =================
 
@@ -54,4 +48,3 @@ const handleError = (error) => {
 authAPI.interceptors.response.use((res) => res, handleError);
 productAPI.interceptors.response.use((res) => res, handleError);
 orderAPI.interceptors.response.use((res) => res, handleError);
-bannerAPI.interceptors.response.use((res) => res, handleError);
