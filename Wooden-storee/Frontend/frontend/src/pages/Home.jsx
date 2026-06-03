@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { productAPI } from "../utils/api";
+import { productAPI, bannerAPI } from "../utils/api";
 import { CartContext } from "../context/CartContext";
 import ProductCard from "../components/ProductCard";
 import { motion } from "framer-motion";
@@ -23,8 +23,8 @@ export default function Home() {
 
   const fetchBanner = async () => {
     try {
-      const res = await fetch("https://banner-service.onrender.com/api/banner/get");
-      const data = await res.json();
+      const res = await bannerAPI.get("/get");
+      const data = await res.data;
       setBanner(data);
     } catch (err) {
       console.log(err);
