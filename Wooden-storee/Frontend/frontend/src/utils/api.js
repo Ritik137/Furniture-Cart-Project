@@ -3,22 +3,21 @@ import axios from "axios";
 
 // ================= AUTH =================
 export const authAPI = axios.create({
-  baseURL: "http://localhost:5001/auth/api"
+  baseURL: "https://auth-service-15tn.onrender.com/auth/api",
 });
 
 // ================= PRODUCT =================
 export const productAPI = axios.create({
-  baseURL: "http://localhost:5002/products/api"
+  baseURL: "https://product-service-8r0c.onrender.com/products/api",
 });
 
 // ================= ORDER =================
 export const orderAPI = axios.create({
-  baseURL: "http://localhost:5003/orders/api"
+  baseURL: "https://order-service-ry2o.onrender.com/orders/api",
 });
 
 // ================= COMMON INTERCEPTOR =================
 
-// 🔥 Function banaya reusable
 const attachToken = (config) => {
   const token = localStorage.getItem("token");
 
@@ -29,7 +28,6 @@ const attachToken = (config) => {
   return config;
 };
 
-// 🔥 Apply to all APIs
 authAPI.interceptors.request.use(attachToken);
 productAPI.interceptors.request.use(attachToken);
 orderAPI.interceptors.request.use(attachToken);
@@ -47,6 +45,6 @@ const handleError = (error) => {
   return Promise.reject(error);
 };
 
-authAPI.interceptors.response.use(res => res, handleError);
-productAPI.interceptors.response.use(res => res, handleError);
-orderAPI.interceptors.response.use(res => res, handleError);
+authAPI.interceptors.response.use((res) => res, handleError);
+productAPI.interceptors.response.use((res) => res, handleError);
+orderAPI.interceptors.response.use((res) => res, handleError);

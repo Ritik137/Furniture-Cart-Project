@@ -6,7 +6,15 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5174",
+      "https://furniture-cart-project-pr7c.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 connectDB();
